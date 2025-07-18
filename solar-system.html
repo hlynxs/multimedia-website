@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Video card styles */
+        .video-card {
+            width: 100%;
+            max-width: 400px;
+            margin: 15px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+        
+        .video-card h3 {
+            padding: 15px 15px 5px;
+            margin: 0;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+        
+        .video-card p {
+            padding: 0 15px 15px;
+            margin: 0;
+            color: #a1a1a1;
+            font-size: 0.9rem;
+        }
+        
+        .tools-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="rotoscoping.html" class="nav-link">Rotoscoping</a></li>
+                <li><a href="#" class="nav-link active">Solar System</a></li>
+                <li><a href="profile.html" class="nav-link active">Profile</a></li>
+
+            </ul>
+        </nav>
+
+        <!-- Solar System Calculator Page -->
+        <div class="page active">
+            <h1>SOLAR SYSTEM AGE CALCULATOR</h1>
+            <div class="intro">
+                Discover your cosmic age across our solar system. Time is relative, and your age varies dramatically depending on which celestial body you're calling home.
+            </div>
+            
+            <!-- Main Solar System Video Card -->
+            <div class="video-card" style="max-width: 800px; margin: 20px auto;">
+                <h2>THE SOLAR SYSTEM IN MOTION</h2>
+                <div class="video-container">
+                    <video controls autoplay loop muted playsinline>
+                        <source src="media/SolarSystem.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p>Watch our entire solar system in motion, with all planets orbiting the Sun in their unique rhythms.</p>
+            </div>
+            
+            <div class="definition-box">
+                <h2>PLANETARY TIME DILATION</h2>
+                <p>Each planet in our solar system moves to its own temporal rhythm, governed by its orbital period around the Sun. While Earth completes its journey in 365.25 days, other worlds dance to vastly different clocks—from Mercury's frantic 88-day year to Neptune's leisurely 60,190-day orbit. This calculator translates your Earth age into the cosmic equivalent across our planetary neighborhood.</p>
+            </div>
+
+            <div class="calculator">
+                <div class="input-group">
+                    <label for="earth-age">YOUR EARTH AGE (IN YEARS)</label>
+                    <input type="number" id="earth-age" placeholder="Enter your age on Earth" min="0" step="0.1">
+                </div>
+                
+                <button class="calc-button" id="calculate">CALCULATE COSMIC AGE</button>
+                
+                <div class="results-grid" id="results">
+                    <!-- Results will be inserted here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Solar System Video Cards Section -->
+            <div class="section-content">
+                <h2>SOLAR SYSTEM VIDEO TOUR</h2>
+                <div class="tools-grid">
+                    <!-- Sun Video Card -->
+                    <div class="video-card">
+                        <h3>THE SUN</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/sun.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>The heart of our solar system, around which all planets orbit</p>
+                    </div>
+                    
+                    <!-- Mercury Video Card -->
+                    <div class="video-card">
+                        <h3>MERCURY</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/mercury.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>87.97 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Venus Video Card -->
+                    <div class="video-card">
+                        <h3>VENUS</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/venus.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>224.70 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Earth Video Card -->
+                    <div class="video-card">
+                        <h3>EARTH</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/earth.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>365.25 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Mars Video Card -->
+                    <div class="video-card">
+                        <h3>MARS</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/mars.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>686.98 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Jupiter Video Card -->
+                    <div class="video-card">
+                        <h3>JUPITER</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/jupiter.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>4,332.59 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Saturn Video Card -->
+                    <div class="video-card">
+                        <h3>SATURN</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/saturn.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>10,755.70 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Uranus Video Card -->
+                    <div class="video-card">
+                        <h3>URANUS</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/uranus.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>30,687.15 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Neptune Video Card -->
+                    <div class="video-card">
+                        <h3>NEPTUNE</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/neptune.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>60,190.03 Earth days orbital period</p>
+                    </div>
+                    
+                    <!-- Pluto Video Card -->
+                    <div class="video-card">
+                        <h3>PLUTO</h3>
+                        <div class="video-container">
+                            <video controls autoplay loop muted playsinline>
+                                <source src="media/pluto.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p>90,560 Earth days orbital period</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-content">
+                <h2>HOW PLANETARY AGES WORK</h2>
+                <p>The concept is simple yet profound: your age on another planet is determined by how many times that planet has orbited the Sun during your lifetime. Mercury, with its short 88-day year, would see you celebrating many more birthdays than on Earth. Meanwhile, the outer planets' extended orbits mean you'd age much more slowly by their calendars. This calculator uses precise orbital period data to give you an accurate measure of your solar system age.</p>
+            </div>
+
+            <div class="section-content">
+                <h2>PLANETARY ORBITAL PERIODS</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <h3>MERCURY</h3>
+                        <p>87.97 Earth days</p>
+                    </div>
+                    <div class="tool-card">
+                        <h3>VENUS</h3>
+                        <p>224.70 Earth days</p>
+                    </div>
+                    <div class="tool-card">
+                        <h3>EARTH</h3>
+                        <p>365.25 Earth days</p>
+                    </div>
+                    <div class="tool-card">
+                        <h3>MARS</h3>
+                        <p>686.98 Earth days</p>
+                    </div>
+                    <div class="tool-card">
+                        <h3>JUPITER</h3>
+                        <p>4,332.59 Earth days</p>
+                    </div>
+                    <div class="tool-card">
+                        <h3>SATURN</h3>
+                        <p>10,755.70 Earth days</p>
+                    </div>
+                    <div class="tool-card">
+                        <h3>URANUS</h3>
+                        <p>30,687.15 Earth days</p>
+                    </div>
+                    <div class="tool-card">
+                        <h3>NEPTUNE</h3>
+                        <p>60,190.03 Earth days</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
