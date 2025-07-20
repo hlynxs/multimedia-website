@@ -85,7 +85,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     { name: 'Jupiter', period: 4332.59 },
                     { name: 'Saturn', period: 10755.70 },
                     { name: 'Uranus', period: 30687.15 },
-                    { name: 'Neptune', period: 60190.03 }
+                    { name: 'Neptune', period: 60190.03 },
+                    { name: 'Pluto', period: 90560.00 } // Added Pluto here
+
                 ];
                 
                 const resultsContainer = document.getElementById('results');
