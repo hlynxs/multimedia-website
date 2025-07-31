@@ -61,7 +61,79 @@
             gap: 20px;
             padding: 20px 0;
         }
+
+        /* Blender download section styles */
+        .blender-downloads {
+            background: #0f0f23;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+            border: 1px solid #2a2a4a;
+        }
+
+        .blender-downloads h2 {
+            color: #4fc3f7;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .blender-download-options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .blender-download-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .blender-download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .blender-download-btn i {
+            font-size: 1.3rem;
+        }
+
+        .individual-downloads {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .individual-download-btn {
+            background: #1a1a2e;
+            color: white;
+            border: 1px solid #4fc3f7;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .individual-download-btn:hover {
+            background: #4fc3f7;
+            color: #0f0f23;
+        }
     </style>
+    <!-- Font Awesome for download icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -238,6 +310,52 @@
                 </div>
             </div>
 
+               <!-- New Blender Downloads Section -->
+            <div class="blender-downloads">
+                <h2><i class="fas fa-cubes"></i> BLENDER FILES DOWNLOAD</h2>
+                <div class="blender-download-options">
+                    <button id="download-all-blender" class="blender-download-btn">
+                        <i class="fas fa-file-archive"></i> DOWNLOAD ALL BLENDER FILES (ZIP)
+                    </button>
+                    
+                    <div class="individual-downloads">
+                        <button class="individual-download-btn" data-file="sun.blend">
+                            <i class="fas fa-download"></i> Sun
+                        </button>
+                        <button class="individual-download-btn" data-file="mercury (1).blend">
+                            <i class="fas fa-download"></i> Mercury
+                        </button>
+                        <button class="individual-download-btn" data-file="venus (1).blend">
+                            <i class="fas fa-download"></i> Venus
+                        </button>
+                        <button class="individual-download-btn" data-file="earth (1).blend">
+                            <i class="fas fa-download"></i> Earth
+                        </button>
+                        <button class="individual-download-btn" data-file="mars (1).blend">
+                            <i class="fas fa-download"></i> Mars
+                        </button>
+                        <button class="individual-download-btn" data-file="jupiter (1).blend">
+                            <i class="fas fa-download"></i> Jupiter
+                        </button>
+                        <button class="individual-download-btn" data-file="saturn.blend">
+                            <i class="fas fa-download"></i> Saturn
+                        </button>
+                        <button class="individual-download-btn" data-file="uranus.blend">
+                            <i class="fas fa-download"></i> Uranus
+                        </button>
+                        <button class="individual-download-btn" data-file="neptune.blend">
+                            <i class="fas fa-download"></i> Neptune
+                        </button>
+                        <button class="individual-download-btn" data-file="pluto.blend">
+                            <i class="fas fa-download"></i> Pluto
+                        </button>
+                        <button class="individual-download-btn" data-file="PASTETEOSOLARSYSTEM.blend">
+                            <i class="fas fa-download"></i> Solar System
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="section-content">
                 <h2>HOW PLANETARY AGES WORK</h2>
                 <p>The concept is simple yet profound: your age on another planet is determined by how many times that planet has orbited the Sun during your lifetime. Mercury, with its short 88-day year, would see you celebrating many more birthdays than on Earth. Meanwhile, the outer planets' extended orbits mean you'd age much more slowly by their calendars. This calculator uses precise orbital period data to give you an accurate measure of your solar system age.</p>
@@ -288,5 +406,31 @@
     </div>
 
     <script src="script.js"></script>
+
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Download all Blender files
+            document.getElementById('download-all-blender').addEventListener('click', function() {
+                // This will be handled by the main script.js
+                downloadAllBlenderFiles();
+            });
+
+            // Individual file downloads
+            document.querySelectorAll('.individual-download-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filename = this.getAttribute('data-file');
+                    const fileUrl = `blender_files/${filename}`;
+                    
+                    // Create a temporary link to trigger the download
+                    const a = document.createElement('a');
+                    a.href = fileUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

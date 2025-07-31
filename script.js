@@ -107,5 +107,163 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+         initBlenderDownloads();
     }
 });
+
+// Function to initialize Blender file downloads
+function initBlenderDownloads() {
+    // List of Blender files with their display names
+    const blenderFiles = [
+        { name: "Sun", url: "blender_files/sun.blend" },
+        { name: "Mercury", url: "blender_files/mercury (1).blend" },
+        { name: "Venus", url: "blender_files/venus (1).blend" },
+        { name: "Earth", url: "blender_files/earth (1).blend" },
+        { name: "Mars", url: "blender_files/mars (1).blend" },
+        { name: "Jupiter", url: "blender_files/jupiter (1).blend" },
+        { name: "Saturn", url: "blender_files/saturn.blend" },
+        { name: "Uranus", url: "blender_files/uranus.blend" },
+        { name: "Neptune", url: "blender_files/neptune.blend" },
+        { name: "Pluto", url: "blender_files/pluto.blend" },
+        { name: "Solar System", url: "blender_files/PASTETEOSOLARSYSTEM.blend" }
+    ];
+
+    // Set up individual download buttons
+    document.querySelectorAll('.individual-download-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filename = this.getAttribute('data-file');
+            const file = blenderFiles.find(f => f.url.includes(filename));
+            if (file) {
+                downloadBlenderFile(file.url, file.name);
+            }
+        });
+    });
+
+    // Set up "Download All" button
+    const downloadAllBtn = document.getElementById('download-all-blender');
+    if (downloadAllBtn) {
+        downloadAllBtn.addEventListener('click', async function() {
+            await downloadAllBlenderFiles(blenderFiles);
+        });
+    }
+}
+
+// Function to download a single Blender file
+function downloadBlenderFile(url, name) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name + '.blend';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+// Function to download all Blender files as a ZIP
+async function downloadAllBlenderFiles(blenderFiles) {
+    const downloadButton = document.getElementById('download-all-blender');
+    if (!downloadButton) return;
+
+    const originalText = downloadButton.innerHTML;
+    downloadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PREPARING DOWNLOAD...';
+    downloadButton.disabled = true;
+
+    try {
+        // Load JSZip library
+        const JSZip = await loadJSZip();
+        const zip = new JSZip();
+        let downloadedCount = 0;
+
+        // Add each file to the ZIP
+        for (const file of blenderFiles) {
+            try {
+                const response = await fetchWithTimeout(file.url, {
+                    timeout: 5000 // 5 second timeout per file
+                });
+                
+                if (!response.ok) {
+                    console.error(`Failed to fetch ${file.url}: ${response.status}`);
+                    continue;
+                }
+
+                const blob = await response.blob();
+                const filename = file.url.split('/').pop();
+                zip.file(filename, blob);
+                downloadedCount++;
+
+                // Update progress
+                downloadButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> DOWNLOADING (${downloadedCount}/${blenderFiles.length})...`;
+            } catch (err) {
+                console.error(`Error downloading ${file.url}:`, err);
+            }
+        }
+
+        if (downloadedCount === 0) {
+            throw new Error("No files were downloaded successfully");
+        }
+
+        // Generate ZIP
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        
+        // Trigger download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'solar-system-blender-files.zip';
+        document.body.appendChild(a);
+        a.click();
+
+        // Clean up
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            downloadButton.innerHTML = '<i class="fas fa-check"></i> DOWNLOAD COMPLETE!';
+            setTimeout(() => {
+                downloadButton.innerHTML = originalText;
+                downloadButton.disabled = false;
+            }, 2000);
+        }, 100);
+
+    } catch (error) {
+        console.error('Error creating zip file:', error);
+        downloadButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> DOWNLOAD FAILED - TRY AGAIN';
+        setTimeout(() => {
+            downloadButton.innerHTML = originalText;
+            downloadButton.disabled = false;
+        }, 2000);
+    }
+}
+
+// Helper function to load JSZip
+function loadJSZip() {
+    return new Promise((resolve, reject) => {
+        if (window.JSZip) {
+            resolve(window.JSZip);
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+        script.onload = () => {
+            if (window.JSZip) {
+                resolve(window.JSZip);
+            } else {
+                reject(new Error('JSZip not loaded correctly'));
+            }
+        };
+        script.onerror = () => reject(new Error('Failed to load JSZip'));
+        document.head.appendChild(script);
+    });
+}
+
+// Helper function for fetch with timeout
+function fetchWithTimeout(url, options = {}) {
+    const { timeout = 8000 } = options;
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    return fetch(url, {
+        ...options,
+        signal: controller.signal
+    }).finally(() => clearTimeout(timeoutId));
+}
